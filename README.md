@@ -6,7 +6,16 @@
 
 ### Nest.jsの概念
 
-https://qiita.com/Hashimoto-Noriaki/items/d71f972c06563ad60d53
+https://zenn.dev/norihashimo/articles/de0edfde59edf2
+
+- service
+```
+nest g service article --no-spec
+```
+- resolver
+```
+nest g resolver article --no-spec
+```
 
 ### 公式ドキュメント
 
@@ -52,11 +61,19 @@ npx prettier --write .
 npx prisma generate
 ```
 
+### prisma studio
+```
+npx prisma studio
+```
+
 ### マイグレーション作成
 
 ```
 npx prisma migrate dev --name init
 ```
+
+### Hasura
+
 
 ### psqlコマンド
 ```
