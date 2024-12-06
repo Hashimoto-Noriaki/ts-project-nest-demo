@@ -66,6 +66,10 @@ npx prisma generate
 npx prisma studio
 ```
 
+#### prismaスカラー型
+
+https://www.prisma.io/docs/orm/reference/prisma-schema-reference#model-field-scalar-types
+
 ### マイグレーション作成
 
 ```
