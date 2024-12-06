@@ -9,16 +9,17 @@ export class ArticleResolver {
 
   // getArticles Query を定義（記事一覧取得）
   @Query(() => [Article], { nullable: 'items' })
-  getArticles(): Article[] {
+  async getArticles(): Promise<Article[]> {
+    // 非同期メソッドに変更しPromise型を使用
     return this.articleService.getArticles();
   }
 
   // createArticle Mutation を定義
   @Mutation(() => Article)
-  createArticle(
-    @Args('createArticleInput') createArticleInput: CreateArticleInput,
-  ): Article {
-    const { title, url, description, tags } = createArticleInput; // 入力データを分解
-    return this.articleService.createArticle(title, url, description, tags); // 各引数に渡す
+  async createArticle(
+    @Args('createArticleInput') createArticleInput: CreateArticleInput, // 入力データ
+  ): Promise<Article> {
+    // 非同期メソッドに変更しPromise型を使用
+    return this.articleService.createArticle(createArticleInput); // CreateArticleInput型のオブジェクトを渡す
   }
 }

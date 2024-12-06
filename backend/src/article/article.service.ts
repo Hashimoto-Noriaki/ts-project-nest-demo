@@ -1,37 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { Article } from './models/article.model';
+import { Article as ArticleModel } from './models/article.model';
+import { Article } from '@prisma/client';
+import { PrismaService } from '../../prisma/prisma.service';
+import { CreateArticleInput } from './dto/CreateArticleInput';
 
 @Injectable()
 export class ArticleService {
-  articles: Article[] = [];
-
-  // 新しい記事を作成するメソッド
-  createArticle(
-    title: string,
-    url: string,
-    description?: string,
-    tags?: string[],
-  ): Article {
-    const newArticle = new Article();
-
-    // 新しい記事のIDを自動的に付与
-    newArticle.id = this.articles.length + 1;
-    newArticle.title = title;
-    newArticle.url = url;
-    newArticle.description = description || '';
-    newArticle.tags = tags || [];
-    newArticle.createdAt = new Date();
-    newArticle.updatedAt = new Date();
-    newArticle.deletedAt = null;
-
-    // 作成した記事をarticles配列に追加
-    this.articles.push(newArticle);
-
-    return newArticle;
-  }
+  constructor(private readonly prismaService: PrismaService) {}
 
   // 記事一覧を取得するメソッド
-  getArticles(): Article[] {
-    return this.articles;
+  async getArticles(): Promise<ArticleModel[]> {
+    const articles = await this.prismaService.article.findMany();
+    return articles.map((article) => this.mapToArticleModel(article));
+  }
+
+  async createArticle(
+    createArticleInput: CreateArticleInput,
+  ): Promise<ArticleModel> {
+    const { title, url, description, tags } = createArticleInput;
+    const createdArticle = await this.prismaService.article.create({
+      data: {
+        title,
+        url,
+        description,
+        tags,
+      },
+    });
+    return this.mapToArticleModel(createdArticle);
+  }
+
+  // Prisma の Article を GraphQL の ArticleModel に変換するヘルパーメソッド
+  private mapToArticleModel(article: Article): ArticleModel {
+    return {
+      id: article.id,
+      title: article.title,
+      url: article.url,
+      description: article.description,
+      tags: article.tags,
+      createdAt: article.createdAt,
+      updatedAt: article.updatedAt,
+      deletedAt: article.deletedAt || null,
+    };
   }
 }
