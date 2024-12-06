@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { ArticleModule } from './article/article.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ArticleModule } from './article/article.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'), //コードファーストで進める際にnest.jsから自動生成されるスキーマファイルの指定
     }),
     ArticleModule,
+    PrismaModule,
   ],
 })
 export class AppModule {}
