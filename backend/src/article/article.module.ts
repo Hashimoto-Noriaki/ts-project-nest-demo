@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ArticleResolver } from './article.resolver';
 
-@Module({})
+@Module({
+  providers: [ArticleResolver]
+})
 export class ArticleModule {}
