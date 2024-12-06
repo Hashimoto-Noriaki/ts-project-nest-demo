@@ -5,7 +5,7 @@ services:
     image: postgres:15-alpine
     container_name: ts-project-nest-next-graphql-hasura
     ports:
-      - 5433:5433  # このポートは適切に設定されていますか？
+      - 5433:5433 # このポートは適切に設定されていますか？
     volumes:
       - ./docker/postgres/init.d:/docker-entrypoint-initdb.d
       - ./docker/postgres/pgdata:/var/lib/postgresql/data
