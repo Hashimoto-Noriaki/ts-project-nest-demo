@@ -78,6 +78,9 @@ npx prisma migrate dev --name init
 
 ### Hasura
 
+https://hasura.io/learn/ja/graphql/hasura/data-modeling/2-try-user-queries/
+
+https://zenn.dev/rescuenow/articles/30135e098d8d87#%E8%83%8C%E6%99%AF
 
 ### psqlコマンド
 ```
