@@ -48,6 +48,17 @@ export class ArticleService {
     return this.mapToArticleModel(updatedArticle);
   }
 
+  // deleteArticle()メソッド
+  async deleteArticle(id: number): Promise<ArticleModel> {
+    // 指定された ID の記事を削除し、削除された記事情報を取得
+    const deletedArticle = await this.prismaService.article.delete({
+      where: { id },
+    });
+
+    // 削除したタスク情報を ArticlekModel 型で返す
+    return this.mapToArticleModel(deletedArticle);
+  }
+
   // Prisma の Article を GraphQL の ArticleModel に変換するヘルパーメソッド
   private mapToArticleModel(article: Article): ArticleModel {
     return {
