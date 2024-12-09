@@ -22,9 +22,13 @@ nest g resolver article --no-spec
 https://docs.nestjs.com/
 
 ### docker起動
-
+- 起動
 ```
 docker compose up -d
+```
+- 停止
+```
+docker compose down
 ```
 
 ### サーバー起動
