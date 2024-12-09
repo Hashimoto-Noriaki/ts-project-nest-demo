@@ -25,6 +25,7 @@ type Query {
 type Mutation {
   createArticle(createArticleInput: CreateArticleInput!): Article!
   updateArticle(id: Int!, updateArticleInput: UpdateArticleInput!): Article!
+  deleteArticle(id: Int!): Article!
 }
 
 input CreateArticleInput {
