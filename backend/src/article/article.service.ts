@@ -3,6 +3,7 @@ import { Article as ArticleModel } from './models/article.model';
 import { Article } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateArticleInput } from './dto/CreateArticleInput';
+import { UpdateArticleInput } from './dto/UpdateArticleInput';
 
 @Injectable()
 export class ArticleService {
@@ -27,6 +28,24 @@ export class ArticleService {
       },
     });
     return this.mapToArticleModel(createdArticle);
+  }
+
+  // 記事を更新するメソッド
+  async updateArticle(
+    id: number, // Int型として受け取る
+    updateArticleInput: UpdateArticleInput,
+  ): Promise<ArticleModel> {
+    const { title, url, description, tags } = updateArticleInput;
+    const updatedArticle = await this.prismaService.article.update({
+      where: { id }, // idを整数で使用
+      data: {
+        title,
+        url,
+        description,
+        tags,
+      },
+    });
+    return this.mapToArticleModel(updatedArticle);
   }
 
   // Prisma の Article を GraphQL の ArticleModel に変換するヘルパーメソッド
