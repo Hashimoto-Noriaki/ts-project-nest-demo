@@ -24,11 +24,19 @@ type Query {
 
 type Mutation {
   createArticle(createArticleInput: CreateArticleInput!): Article!
+  updateArticle(id: Int!, updateArticleInput: UpdateArticleInput!): Article!
 }
 
 input CreateArticleInput {
   title: String!
   url: String!
+  description: String
+  tags: [String!]
+}
+
+input UpdateArticleInput {
+  title: String
+  url: String
   description: String
   tags: [String!]
 }
