@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { UserModel } from './models/user.model';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateUserInput } from './dto/CreateUserInput';
 import * as bcrypt from 'bcrypt';
@@ -7,19 +7,26 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createUser(createUserInput: CreateUserInput): Promise<User> {
+  async createUser(createUserInput: CreateUserInput): Promise<UserModel> {
     const { name, email, password } = createUserInput;
     const hashedPassword = await bcrypt.hash(password, 10); // パスワードをハッシュ化
 
     // ハッシュ化されたパスワードを使って新しいユーザーをデータベースに作成
-    const newUser = await this.prismaService.user.create({
+    const createdUser = await this.prismaService.user.create({
       data: {
         name,
         email,
-        password: hashedPassword, // ハッシュ化したパスワードを保存
+        password: hashedPassword,
       },
     });
 
-    return newUser; // 新しく作成されたユーザーを返す
+    // 不要なフィールドを除き、UserModel に合わせてデータを返す
+    return {
+      id: createdUser.id,
+      name: createdUser.name,
+      email: createdUser.email,
+      createdAt: createdUser.createdAt,
+      updatedAt: createdUser.updatedAt,
+    };
   }
 }
