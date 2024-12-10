@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
 import {
   IsNotEmpty,
   IsString,
@@ -29,4 +29,7 @@ export class CreateArticleInput {
   @IsArray()
   @IsString({ each: true }) // 配列内の要素が文字列であることを保証
   tags?: string[]; // オプションの文字列配列
+
+  @Field(() => Int)
+  userId: number;
 }

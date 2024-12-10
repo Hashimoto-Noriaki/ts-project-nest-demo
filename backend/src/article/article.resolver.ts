@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query, Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Int, Context } from '@nestjs/graphql';
 import { ArticleService } from './article.service';
 import { Article as ArticleModel } from './models/article.model';
 import { CreateArticleInput } from './dto/CreateArticleInput';
@@ -10,18 +10,21 @@ export class ArticleResolver {
 
   // getArticles Query を定義（記事一覧取得）
   @Query(() => [ArticleModel], { nullable: 'items' })
-  async getArticles(): Promise<ArticleModel[]> {
-    // 非同期メソッドに変更しPromise型を使用
-    return this.articleService.getArticles();
+  async getArticles(
+    @Context('user') user: { id: number },
+  ): Promise<ArticleModel[]> {
+    const userId = user.id; // Context から userId を取得
+    return this.articleService.getArticles(userId);
   }
 
   // createArticle Mutation を定義
   @Mutation(() => ArticleModel)
   async createArticle(
     @Args('createArticleInput') createArticleInput: CreateArticleInput, // 入力データ
+    @Context('user') user: { id: number }, // Context から userId を取得
   ): Promise<ArticleModel> {
-    // 非同期メソッドに変更しPromise型を使用
-    return this.articleService.createArticle(createArticleInput); // CreateArticleInput型のオブジェクトを渡す
+    const userId = user.id;
+    return this.articleService.createArticle(createArticleInput, userId);
   }
 
   @Mutation(() => ArticleModel)

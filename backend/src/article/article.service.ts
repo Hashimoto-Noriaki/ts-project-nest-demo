@@ -10,13 +10,16 @@ export class ArticleService {
   constructor(private readonly prismaService: PrismaService) {}
 
   // 記事一覧を取得するメソッド
-  async getArticles(): Promise<ArticleModel[]> {
-    const articles = await this.prismaService.article.findMany();
+  async getArticles(userId: number): Promise<ArticleModel[]> {
+    const articles = await this.prismaService.article.findMany({
+      where: { userId },
+    });
     return articles.map((article) => this.mapToArticleModel(article));
   }
 
   async createArticle(
     createArticleInput: CreateArticleInput,
+    userId: number,
   ): Promise<ArticleModel> {
     const { title, url, description, tags } = createArticleInput;
     const createdArticle = await this.prismaService.article.create({
@@ -25,6 +28,7 @@ export class ArticleService {
         url,
         description,
         tags,
+        userId,
       },
     });
     return this.mapToArticleModel(createdArticle);
