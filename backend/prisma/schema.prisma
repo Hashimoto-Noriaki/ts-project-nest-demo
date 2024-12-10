@@ -22,4 +22,19 @@ model Article {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   deletedAt   DateTime?
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                 Int   @id @default(autoincrement()) // 自動増分のbigint型ID
+  name               String
+  email              String   @unique // メールアドレス（ユニーク）
+  emailVerifiedAt    DateTime? // メール認証日時（nullable）
+  password           String   // ユーザーのパスワード
+  rememberToken      String?  // 記憶トークン（nullable）
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  deletedAt          DateTime? // 論理削除日時（nullable）
+  article Article[]
 }
