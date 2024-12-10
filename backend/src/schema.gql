@@ -33,6 +33,7 @@ input CreateArticleInput {
   url: String!
   description: String
   tags: [String!]
+  userId: Int!
 }
 
 input UpdateArticleInput {
