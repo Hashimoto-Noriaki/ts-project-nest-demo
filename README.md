@@ -91,4 +91,10 @@ https://zenn.dev/rescuenow/articles/30135e098d8d87#%E8%83%8C%E6%99%AF
 docker exec -it ts-project-nest-next-graphql-hasura psql -U nori_user noridb 
 ```
 
-### テーブルの確認のた
+# Next.js
+- サーバー起動
+```
+npm run dev
+```
+
+
