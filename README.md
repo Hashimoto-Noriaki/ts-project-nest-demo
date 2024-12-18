@@ -52,7 +52,6 @@ npx prettier --write .
 ```
 
 ### playgrondでQueryを実行
-
 サーバー実行
 
 - http://localhost:3000/graphql
@@ -91,10 +90,18 @@ https://zenn.dev/rescuenow/articles/30135e098d8d87#%E8%83%8C%E6%99%AF
 docker exec -it ts-project-nest-next-graphql-hasura psql -U nori_user noridb 
 ```
 
+
 # Next.js
 - サーバー起動
 ```
 npm run dev
 ```
+
+- GraphQLの確認
+```
+npm run dev
+```
+記事の一覧取得
+http://localhost:3000/articles
 
 
