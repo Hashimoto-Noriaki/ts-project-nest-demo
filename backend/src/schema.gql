@@ -28,6 +28,7 @@ type UserModel {
 
 type Query {
   getArticles: [Article]!
+  getUser(email: String!): UserModel
 }
 
 type Mutation {
