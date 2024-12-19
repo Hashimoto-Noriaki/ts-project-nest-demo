@@ -29,4 +29,10 @@ export class UserService {
       updatedAt: createdUser.updatedAt,
     };
   }
+
+  async getUser(email: string): Promise<UserModel> {
+    return await this.prismaService.user.findUnique({
+      where: { email },
+    });
+  }
 }
